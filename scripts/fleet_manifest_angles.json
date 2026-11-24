@@ -1,0 +1,111 @@
+{
+  "auto_terminate_on_done": false,
+  "max_respawns_per_case": 6,
+  "aws_targets": [
+    {
+      "profile": "aws-cfd",
+      "region": "us-east-1",
+      "enabled": true,
+      "spot_vcpu_quota": 256,
+      "spot_vcpu_cap": 256,
+      "ami_id": "ami-0a951420c495183dc",
+      "key_name": "cfd-of13-key",
+      "security_group_id": "sg-02e30c3e45cd34e46",
+      "subnet_id": "subnet-0a10f872a5e3a42c4"
+    },
+    {
+      "profile": "aws-cfd-2",
+      "region": "ap-south-1",
+      "enabled": true,
+      "spot_vcpu_quota": 256,
+      "spot_vcpu_cap": 192,
+      "ami_id": "ami-032eca770b5d15e72",
+      "key_name": "cfd-of13-key",
+      "security_group_id": "sg-03036192aee102d77",
+      "subnet_id": "subnet-003be27ab6bf398af"
+    },
+    {
+      "profile": "aws-cfd",
+      "region": "ap-south-1",
+      "enabled": true,
+      "spot_vcpu_quota": 256,
+      "spot_vcpu_cap": 192,
+      "ami_id": "ami-032eca770b5d15e72",
+      "key_name": "cfd-of13-key",
+      "security_group_id": "sg-02c5f778cd9f2d61c",
+      "subnet_id": "subnet-0d8cfad2777138aba"
+    }
+  ],
+  "cases": [
+    {
+      "case_name": "h2_ch4_60deg_bottom_verified",
+      "mesh_gdrive_path": "gdrive:CFD_H2_CH4_Full3D_OF13/cases/h2_ch4_60deg_verified/h2_ch4_60deg_verified_mesh_and_setup.tar.gz",
+      "orientation": "bottom",
+      "n_procs": 64,
+      "end_time": 3.0,
+      "max_co": 5.0,
+      "status": "PENDING",
+      "respawn_count": 0
+    },
+    {
+      "case_name": "h2_ch4_30deg_top_verified",
+      "mesh_gdrive_path": "gdrive:CFD_H2_CH4_Full3D_OF13/cases/h2_ch4_30deg_top_verified/h2_ch4_30deg_top_verified_mesh_and_setup.tar.gz",
+      "orientation": "top",
+      "n_procs": 64,
+      "end_time": 3.0,
+      "max_co": 5.0,
+      "status": "PENDING",
+      "respawn_count": 0
+    },
+    {
+      "case_name": "h2_ch4_30deg_bottom_verified",
+      "mesh_gdrive_path": "gdrive:CFD_H2_CH4_Full3D_OF13/cases/h2_ch4_30deg_top_verified/h2_ch4_30deg_top_verified_mesh_and_setup.tar.gz",
+      "orientation": "bottom",
+      "n_procs": 64,
+      "end_time": 3.0,
+      "max_co": 5.0,
+      "status": "PENDING",
+      "respawn_count": 0
+    },
+    {
+      "case_name": "h2_ch4_120deg_top_verified",
+      "mesh_gdrive_path": "gdrive:CFD_H2_CH4_Full3D_OF13/cases/h2_ch4_120deg_top_verified/h2_ch4_120deg_top_verified_mesh_and_setup.tar.gz",
+      "orientation": "top",
+      "n_procs": 64,
+      "end_time": 3.0,
+      "max_co": 3.0,
+      "status": "PENDING",
+      "respawn_count": 0
+    },
+    {
+      "case_name": "h2_ch4_120deg_bottom_verified",
+      "mesh_gdrive_path": "gdrive:CFD_H2_CH4_Full3D_OF13/cases/h2_ch4_120deg_top_verified/h2_ch4_120deg_top_verified_mesh_and_setup.tar.gz",
+      "orientation": "bottom",
+      "n_procs": 64,
+      "end_time": 3.0,
+      "max_co": 3.0,
+      "status": "PENDING",
+      "respawn_count": 0
+    },
+    {
+      "case_name": "h2_ch4_150deg_top_verified",
+      "mesh_gdrive_path": "gdrive:CFD_H2_CH4_Full3D_OF13/cases/h2_ch4_150deg_top_verified/h2_ch4_150deg_top_verified_mesh_and_setup.tar.gz",
+      "orientation": "top",
+      "n_procs": 64,
+      "end_time": 3.0,
+      "max_co": 3.0,
+      "status": "PENDING",
+      "respawn_count": 0
+    },
+    {
+      "case_name": "h2_ch4_150deg_bottom_verified",
+      "mesh_gdrive_path": "gdrive:CFD_H2_CH4_Full3D_OF13/cases/h2_ch4_150deg_top_verified/h2_ch4_150deg_top_verified_mesh_and_setup.tar.gz",
+      "orientation": "bottom",
+      "n_procs": 64,
+      "end_time": 3.0,
+      "max_co": 3.0,
+      "status": "PENDING",
+      "respawn_count": 0
+    }
+  ]
+}

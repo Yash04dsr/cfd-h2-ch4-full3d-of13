@@ -1,0 +1,117 @@
+{
+  "method": "Celik et al. (2008), ASME J. Fluids Eng. 130(7):078001 (strict formal 2nd-order cap p_eff = min(p_apparent, 2.0), Fs = 1.25)",
+  "case": "90-deg Top H2-CH4 T-Junction (k-omega SST URANS, 6.9 MPa Peng-Robinson, t_avg = 1.4->3.0 s)",
+  "meshes": {
+    "Coarse": {
+      "cells": 682521,
+      "V_m3": 1.1582755,
+      "h_mm": 11.928,
+      "mass_err_pct": 0.0125,
+      "h2_err_pct": -0.2608
+    },
+    "Medium": {
+      "cells": 1491187,
+      "V_m3": 1.1590821,
+      "h_mm": 9.194,
+      "mass_err_pct": 0.0385,
+      "h2_err_pct": -0.1035
+    },
+    "Fine": {
+      "cells": 3065019,
+      "V_m3": 1.159505,
+      "h_mm": 7.232,
+      "mass_err_pct": 0.0386,
+      "h2_err_pct": -0.7101
+    }
+  },
+  "refinement_ratios": {
+    "r21": 1.2713,
+    "r32": 1.2973
+  },
+  "stations": {
+    "1D": {
+      "phi1_fine": 2.0471,
+      "phi2_med": 2.0396,
+      "phi3_coarse": 2.0441,
+      "e_a21_pct": 0.37,
+      "e_a32_pct": 0.22,
+      "p_apparent": 2.25,
+      "p_used_formal_cap": 2.0,
+      "convergence": "oscillatory",
+      "phi_ext_21": 2.0592,
+      "GCI_fine_21_pct": 0.74,
+      "GCI_med_32_pct": 0.4,
+      "GCI_fine_21_uncapped_p_pct": 0.64
+    },
+    "2D": {
+      "phi1_fine": 1.8599,
+      "phi2_med": 1.8545,
+      "phi3_coarse": 1.827,
+      "e_a21_pct": 0.29,
+      "e_a32_pct": 1.48,
+      "p_apparent": 6.1,
+      "p_used_formal_cap": 2.0,
+      "convergence": "monotonic",
+      "phi_ext_21": 1.8688,
+      "GCI_fine_21_pct": 0.59,
+      "GCI_med_32_pct": 2.71,
+      "GCI_fine_21_uncapped_p_pct": 0.11
+    },
+    "3D": {
+      "phi1_fine": 1.7207,
+      "phi2_med": 1.7238,
+      "phi3_coarse": 1.687,
+      "e_a21_pct": 0.18,
+      "e_a32_pct": 2.14,
+      "p_apparent": 9.56,
+      "p_used_formal_cap": 2.0,
+      "convergence": "oscillatory",
+      "phi_ext_21": 1.7157,
+      "GCI_fine_21_pct": 0.37,
+      "GCI_med_32_pct": 3.91,
+      "GCI_fine_21_uncapped_p_pct": 0.03
+    },
+    "5D": {
+      "phi1_fine": 1.5257,
+      "phi2_med": 1.5481,
+      "phi3_coarse": 1.4869,
+      "e_a21_pct": 1.47,
+      "e_a32_pct": 3.95,
+      "p_apparent": 3.95,
+      "p_used_formal_cap": 2.0,
+      "convergence": "oscillatory",
+      "phi_ext_21": 1.4895,
+      "GCI_fine_21_pct": 2.97,
+      "GCI_med_32_pct": 7.24,
+      "GCI_fine_21_uncapped_p_pct": 1.16
+    },
+    "7D": {
+      "phi1_fine": 1.4003,
+      "phi2_med": 1.4339,
+      "phi3_coarse": 1.3574,
+      "e_a21_pct": 2.4,
+      "e_a32_pct": 5.34,
+      "p_apparent": 3.24,
+      "p_used_formal_cap": 2.0,
+      "convergence": "oscillatory",
+      "phi_ext_21": 1.3458,
+      "GCI_fine_21_pct": 4.86,
+      "GCI_med_32_pct": 9.77,
+      "GCI_fine_21_uncapped_p_pct": 2.54
+    },
+    "10D": {
+      "phi1_fine": 1.2704,
+      "phi2_med": 1.302,
+      "phi3_coarse": 1.224,
+      "e_a21_pct": 2.48,
+      "e_a32_pct": 5.99,
+      "p_apparent": 3.56,
+      "p_used_formal_cap": 2.0,
+      "convergence": "oscillatory",
+      "phi_ext_21": 1.2192,
+      "GCI_fine_21_pct": 5.04,
+      "GCI_med_32_pct": 10.96,
+      "GCI_fine_21_uncapped_p_pct": 2.3
+    }
+  }
+}

@@ -1,0 +1,79 @@
+FoamFile
+{
+    format      ascii;
+    class       volVectorField;
+    object      U;
+}
+
+dimensions      [0 1 -1 0 0 0 0];
+internalField   uniform (0 0 10.000000);
+
+boundaryField
+{
+    wall
+    {
+        type            noSlip;
+    }
+
+    main_inlet
+    {
+        type            codedFixedValue;
+        value           uniform (0 0 10.000000);
+        name            mainInletExactPowerLaw;
+        code
+        #{
+            const vectorField& Cf = this->patch().Cf();
+            vectorField& field = *this;
+            const scalar d = 0.460000;
+            const scalar uBulk = 10.000000;
+            const scalar uMax = 1.22449 * uBulk;
+            const scalar n = 7.0;
+            forAll(Cf, i)
+            {
+                const scalar r = Foam::sqrt(sqr(Cf[i].x()) + sqr(Cf[i].y()));
+                const scalar arg = Foam::max(1.0 - (2.0 * r / d), scalar(0));
+                const scalar u = uMax * Foam::pow(arg, 1.0 / n);
+                field[i] = vector(0, 0, u);
+            }
+        #};
+    }
+
+    branch_inlet
+    {
+        type            codedFixedValue;
+        value           uniform (0 -32.000000 0.000000);
+        name            branchInletExactPowerLaw;
+        code
+        #{
+            const vectorField& Cf = this->patch().Cf();
+            vectorField& field = *this;
+            const scalar d = 0.115000;
+            const scalar uBulk = 32.000000;
+            const scalar uMax = 1.22449 * uBulk;
+            const scalar zc = 2.300000;
+            const scalar sa = 1.00000000;
+            const scalar ca = 0.00000000;
+            const scalar n = 7.0;
+            forAll(Cf, i)
+            {
+                const scalar wx = Cf[i].x();
+                const scalar wy = Cf[i].y();
+                const scalar wz = Cf[i].z() - zc;
+                const scalar sProj = wy * sa + wz * (-ca);
+                const scalar ppx = wx;
+                const scalar ppy = wy - sProj * sa;
+                const scalar ppz = wz - sProj * (-ca);
+                const scalar r = Foam::sqrt(ppx*ppx + ppy*ppy + ppz*ppz);
+                const scalar arg = Foam::max(1.0 - (2.0 * r / d), scalar(0));
+                const scalar u = uMax * Foam::pow(arg, 1.0 / n);
+                field[i] = vector(0.0, -u * sa, u * ca);
+            }
+        #};
+    }
+
+    outlet
+    {
+        type            pressureInletOutletVelocity;
+        value           uniform (0 0 10.000000);
+    }
+}

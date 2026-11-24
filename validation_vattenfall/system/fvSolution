@@ -1,0 +1,104 @@
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      fvSolution;
+}
+
+solvers
+{
+    "rho.*"
+    {
+        solver          diagonal;
+    }
+
+    p_rgh
+    {
+        solver          GAMG;
+        smoother        DICGaussSeidel;
+        tolerance       1e-7;
+        relTol          0.01;
+        maxIter         100;
+    }
+
+    p_rghFinal
+    {
+        $p_rgh;
+        relTol          0;
+    }
+
+    p
+    {
+        $p_rgh;
+    }
+
+    pFinal
+    {
+        $p_rghFinal;
+    }
+
+    Phi
+    {
+        $p_rgh;
+    }
+
+    "(U|k|omega|nuTilda)"
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-7;
+        relTol          0.1;
+        nSweeps         2;
+    }
+
+    "(U|k|omega|nuTilda)Final"
+    {
+        $U;
+        relTol          0;
+    }
+
+    "(H2|CH4|Yi|h|e)"
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-7;
+        relTol          0.1;
+        maxIter         100;
+    }
+
+    "(H2|CH4|Yi|h|e)Final"
+    {
+        $H2;
+        relTol          0;
+    }
+}
+
+PIMPLE
+{
+    momentumPredictor           yes;
+    nOuterCorrectors            8;
+    nCorrectors                 2;
+    nNonOrthogonalCorrectors    1;
+    transonic                   no;
+
+    outerCorrectorResidualControl
+    {
+        p_rgh   { tolerance 1e-4; relTol 0; }
+        U       { tolerance 1e-4; relTol 0; }
+        "(H2|h|e)" { tolerance 1e-4; relTol 0; }
+    }
+}
+
+relaxationFactors
+{
+    fields
+    {
+        p_rgh           0.3;
+        p_rghFinal      1.0;
+    }
+    equations
+    {
+        ".*"            0.7;
+        ".*Final"       1.0;
+    }
+}

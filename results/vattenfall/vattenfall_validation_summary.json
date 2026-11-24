@@ -1,0 +1,43 @@
+{
+  "case": "/home/ubuntu/cfd_full3d_of13/validation_vattenfall",
+  "benchmark": "OECD/NEA Vattenfall T-junction (Smith et al. 2013, Nucl. Eng. Des. 264:80-88)",
+  "end_time_s": 17.985484,
+  "avg_start_s": 7.2,
+  "mass_in_kg_s": 14.957136939999998,
+  "mass_out_kg_s": 14.957136942537314,
+  "mass_closure_err_pct": 1.6963915922910637e-08,
+  "T_out_CFD_K": 298.92242027611945,
+  "T_out_analytical_K": 298.93175366026964,
+  "T_out_err_K": -0.0093333841501817,
+  "deltaP_Pa": 614.3775298507458,
+  "U_mix_m_s": 0.9745572549924104,
+  "LDV_Uz_RMSE": 0.1425449900462102,
+  "Thermocouple_Tstar_RMSE": 0.1840694735323475,
+  "cfd_Tstar_at_exp_stations": {
+    "z_over_D": [
+      2.0,
+      4.0,
+      6.0,
+      8.0
+    ],
+    "top": [
+      0.5533,
+      0.5751,
+      0.5308,
+      0.4868
+    ],
+    "side": [
+      0.0033,
+      0.0288,
+      0.1253,
+      0.1904
+    ],
+    "bottom": [
+      0.0,
+      0.0002,
+      0.0097,
+      0.067
+    ]
+  },
+  "figure": "/home/ubuntu/cfd_full3d_of13/results/vattenfall/vattenfall_validation_4panel.png"
+}

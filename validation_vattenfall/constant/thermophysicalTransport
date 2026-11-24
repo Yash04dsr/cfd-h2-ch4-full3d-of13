@@ -1,0 +1,12 @@
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      thermophysicalTransport;
+}
+
+RAS
+{
+    model           eddyDiffusivity;
+    Prt             0.85;
+}

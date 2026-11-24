@@ -1,0 +1,48 @@
+{
+  "auto_terminate_on_done": false,
+  "max_respawns_per_case": 6,
+  "aws_targets": [
+    {
+      "profile": "aws-cfd",
+      "region": "ap-south-1",
+      "enabled": true,
+      "spot_vcpu_quota": 256,
+      "ami_id": "ami-0e35ddab05955cf57",
+      "key_name": "cfd-of13-key",
+      "security_group_id": "REPLACE_WITH_SG_ID",
+      "subnet_id": "REPLACE_WITH_SUBNET_ID"
+    },
+    {
+      "profile": "aws-cfd-2",
+      "region": "ap-south-1",
+      "enabled": true,
+      "spot_vcpu_quota": 216,
+      "ami_id": "ami-032eca770b5d15e72",
+      "key_name": "cfd-of13-key",
+      "security_group_id": "sg-03036192aee102d77",
+      "subnet_id": "subnet-003be27ab6bf398af"
+    },
+    {
+      "profile": "aws-cfd-3",
+      "region": "ap-south-1",
+      "enabled": false,
+      "spot_vcpu_quota": 256,
+      "ami_id": "REPLACE_WHEN_QUOTA_APPROVED",
+      "key_name": "cfd-of13-key",
+      "security_group_id": "REPLACE_WITH_SG_ID",
+      "subnet_id": "REPLACE_WITH_SUBNET_ID"
+    }
+  ],
+  "cases": [
+    {
+      "case_name": "h2_ch4_60deg_bottom_verified",
+      "mesh_gdrive_path": "gdrive:CFD_H2_CH4_Full3D_OF13/cases/h2_ch4_60deg_verified/h2_ch4_60deg_verified_mesh_and_setup.tar.gz",
+      "orientation": "bottom",
+      "n_procs": 64,
+      "end_time": 3.0,
+      "max_co": 5.0,
+      "status": "PENDING",
+      "respawn_count": 0
+    }
+  ]
+}

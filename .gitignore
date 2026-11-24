@@ -1,0 +1,14 @@
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+*.tar
+*.tar.gz
+*.tar.zst
+*.zip
+*.msh
+*.vtk
+*.vtp
+*.vtu
+processor*/
+dynamicCode/

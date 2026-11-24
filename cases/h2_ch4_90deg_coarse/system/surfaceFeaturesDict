@@ -1,0 +1,16 @@
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      surfaceFeaturesDict;
+}
+
+surfaces
+(
+    "wall.stl"
+    "main_inlet.stl"
+    "outlet.stl"
+    "branch_inlet.stl"
+);
+
+includedAngle   150;

@@ -1,0 +1,45 @@
+{
+  "gate": "Gate 1: Mesh Contract",
+  "passed": true,
+  "metrics": {
+    "cells": 533138,
+    "regions": 1,
+    "maxNonOrtho_deg": 54.653763,
+    "avgNonOrtho_deg": 4.2527548,
+    "maxSkewness": 1.3776879,
+    "minVol": 3.9268493e-10,
+    "mesh_volume_m3": 0.037216103,
+    "cad_volume_m3": 0.03731276951813568,
+    "volume_error_pct": 0.2591,
+    "patches": {
+      "wall": {
+        "type": "wall",
+        "nFaces": 44100
+      },
+      "main_inlet": {
+        "type": "patch",
+        "nFaces": 634
+      },
+      "outlet": {
+        "type": "patch",
+        "nFaces": 634
+      },
+      "branch_inlet": {
+        "type": "patch",
+        "nFaces": 360
+      }
+    },
+    "missing_patches": []
+  },
+  "checks": {
+    "checkMesh_OK": true,
+    "single_connected_region": true,
+    "no_symmetry_plane": true,
+    "zero_allBoundary_faces": true,
+    "all_4_patches_present": true,
+    "maxNonOrtho_lt_65": true,
+    "maxSkewness_lt_4": true,
+    "positive_minVol": true,
+    "volume_match_lt_1.5pct": true
+  }
+}

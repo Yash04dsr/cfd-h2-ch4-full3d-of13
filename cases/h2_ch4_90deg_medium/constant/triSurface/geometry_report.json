@@ -1,0 +1,42 @@
+{
+  "d1": 0.46,
+  "d2": 0.115,
+  "l_up": 2.3,
+  "l_down": 4.6,
+  "l_main": 6.8999999999999995,
+  "l_branch": 1.61,
+  "alpha_deg": 90.0,
+  "cad_volume_m3": 1.1610654776714933,
+  "stl_volume_m3": 1.1600907977307202,
+  "volume_ratio": 0.9991605297379715,
+  "is_watertight": true,
+  "is_volume": true,
+  "euler_number": 2,
+  "n_triangles_total": 121672,
+  "patch_triangles": {
+    "wall": 118730,
+    "main_inlet": 982,
+    "outlet": 982,
+    "branch_inlet": 978
+  },
+  "bounds_min": [
+    -0.23,
+    -0.23,
+    0.0
+  ],
+  "bounds_max": [
+    0.23,
+    1.61,
+    6.8999999999999995
+  ],
+  "location_in_mesh_main": [
+    0.0,
+    0.0,
+    1.15
+  ],
+  "branch_inlet_center": [
+    0.0,
+    1.61,
+    2.3
+  ]
+}

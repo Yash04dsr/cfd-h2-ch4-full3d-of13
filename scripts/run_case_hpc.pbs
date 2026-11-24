@@ -1,0 +1,72 @@
+#!/bin/bash
+#PBS -q standard
+#PBS -P ioe.che.omprakash.1
+#PBS -l select=1:ncpus=40:mpiprocs=40:mem=90gb
+#PBS -l walltime=48:00:00
+#PBS -j oe
+
+set -euo pipefail
+HPC_ROOT="/scratch/chemical/dual/ch7221493/cfd_full3d_of13_clean"
+APPT="/home/apps/centos7/apptainer/install/bin/apptainer"
+SANDBOX="$HPC_ROOT/containers/openfoam13_sandbox"
+
+NPROCS="${NPROCS:-40}"
+MODE="${MODE:-h2_ch4}"
+REUSE_MESH_FROM="${REUSE_MESH_FROM:-}"
+END_TIME="${END_TIME:-3.0}"
+AVG_START="${AVG_START:-1.4}"
+CASE_DIR="$HPC_ROOT/cases/$CASE_NAME"
+mkdir -p "$HPC_ROOT/logs" "$CASE_DIR"
+
+echo "=== PBS JOB $PBS_JOBID on $(hostname) | MODE=$MODE | NPROCS=$NPROCS | CASE=$CASE_NAME | GRID=$GRID | TURB=$TURB | ALPHA=$ALPHA | MAX_CO=$MAX_CO ==="
+
+"$APPT" exec --bind /scratch "$SANDBOX" bash -lc "
+set -e
+unset PBS_JOBID PBS_NODEFILE PBS_ENVIRONMENT PBS_O_HOST PBS_TASKNUM PBS_VNODENUM
+. /opt/openfoam13/etc/bashrc || true
+
+# 1. Build case (Gate 0 + Gate 1A watertight CAD STL)
+python3 $HPC_ROOT/scripts/build_case.py \
+  --case-dir $CASE_DIR \
+  --mode $MODE \
+  --grid $GRID \
+  --turbulence $TURB \
+  --alpha $ALPHA \
+  --sct $SCT \
+  --max-co $MAX_CO \
+  --end-time $END_TIME \
+  --avg-start $AVG_START \
+  --n-procs $NPROCS
+
+# Match live-tuned PIMPLE outer correctors (4) for fast accurate convergence
+sed -i 's/nOuterCorrectors[[:space:]]*[0-9]\+;/nOuterCorrectors 4;/' $CASE_DIR/system/fvSolution
+
+# 2. Gate 2: OpenFOAM v13 Dict Contract Check
+python3 $HPC_ROOT/scripts/verify_gate.py gate2 --case $CASE_DIR --mode $MODE
+
+# 3. Full-3D Parallel Meshing ($NPROCS physical cores) OR reuse Gate-1 verified mesh
+cd $CASE_DIR
+if [ -n \"${REUSE_MESH_FROM:-}\" ] && [ -d \"${REUSE_MESH_FROM}/constant/polyMesh\" ]; then
+  echo \"=== REUSING GATE-1 VERIFIED MESH FROM ${REUSE_MESH_FROM} ===\"
+  rm -rf $CASE_DIR/constant/polyMesh
+  cp -r \"${REUSE_MESH_FROM}/constant/polyMesh\" $CASE_DIR/constant/
+  cp \"${REUSE_MESH_FROM}/gate1_mesh_evidence.json\" $CASE_DIR/
+  cp \"${REUSE_MESH_FROM}/log.checkMesh\" $CASE_DIR/ || true
+else
+  surfaceFeatures > log.surfaceFeatures 2>&1
+  blockMesh > log.blockMesh 2>&1
+  decomposePar -force -noFields > log.decomposePar_mesh 2>&1
+  mpirun -np $NPROCS --bind-to none --oversubscribe snappyHexMesh -parallel -overwrite </dev/null > log.snappyHexMesh 2>&1
+  reconstructPar -constant -noFields > log.reconstructPar_mesh 2>&1
+  rm -rf processor*
+  checkMesh > log.checkMesh 2>&1
+fi
+
+# 4. Gate 1: Mesh Contract Check (aborts if any check fails!)
+python3 $HPC_ROOT/scripts/verify_gate.py gate1 --case $CASE_DIR
+
+# 5. Decompose & Run Full-3D Transient Turbulent Production Solver ($NPROCS physical cores)
+decomposePar -force > log.decomposePar 2>&1
+mpirun -np $NPROCS --bind-to none --oversubscribe foamRun -parallel </dev/null > log.solver 2>&1
+echo '=== PRODUCTION RUN COMPLETE: $CASE_NAME ==='
+"

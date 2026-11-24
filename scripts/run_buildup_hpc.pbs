@@ -1,0 +1,102 @@
+#!/bin/bash
+#PBS -q standard
+#PBS -P ioe.che.omprakash.1
+#PBS -l select=1:ncpus=24:mpiprocs=24:mem=48gb
+#PBS -l walltime=06:00:00
+#PBS -j oe
+
+set -euo pipefail
+HPC_ROOT="/scratch/chemical/dual/ch7221493/cfd_full3d_of13_clean"
+APPT="/home/apps/centos7/apptainer/install/bin/apptainer"
+SANDBOX="$HPC_ROOT/containers/openfoam13_sandbox"
+
+CASE_DIR="$HPC_ROOT/cases/h2_ch4_90deg_buildup_video"
+rm -rf "$CASE_DIR"
+mkdir -p "$CASE_DIR"
+
+echo "=== PBS BUILDUP VIDEO JOB $PBS_JOBID on $(hostname) ==="
+
+"$APPT" exec --bind /scratch "$SANDBOX" bash -lc "
+set -e
+unset PBS_JOBID PBS_NODEFILE PBS_ENVIRONMENT PBS_O_HOST PBS_TASKNUM PBS_VNODENUM
+. /opt/openfoam13/etc/bashrc || true
+
+python3 $HPC_ROOT/scripts/build_case.py \
+  --case-dir $CASE_DIR \
+  --mode h2_ch4 \
+  --grid coarse \
+  --turbulence kOmegaSST \
+  --alpha 90 \
+  --sct 0.7 \
+  --max-co 3.0 \
+  --end-time 0.81 \
+  --avg-start 0.70 \
+  --write-interval 0.015 \
+  --n-procs 24
+
+# Keep ALL 54 frames (no purgeWrite) and match PIMPLE nOuterCorrectors 4
+sed -i 's/purgeWrite[[:space:]]*[0-9]\+;/purgeWrite      0;/' $CASE_DIR/system/controlDict
+sed -i 's/nOuterCorrectors[[:space:]]*[0-9]\+;/nOuterCorrectors 4;/' $CASE_DIR/system/fvSolution
+
+cd $CASE_DIR
+surfaceFeatures > log.surfaceFeatures 2>&1
+blockMesh > log.blockMesh 2>&1
+decomposePar -force -noFields > log.decomposePar_mesh 2>&1
+mpirun -np 24 --bind-to none --oversubscribe snappyHexMesh -parallel -overwrite </dev/null > log.snappyHexMesh 2>&1
+reconstructPar -constant -noFields > log.reconstructPar_mesh 2>&1
+rm -rf processor*
+checkMesh > log.checkMesh 2>&1
+python3 $HPC_ROOT/scripts/verify_gate.py gate1 --case $CASE_DIR
+
+decomposePar -force > log.decomposePar 2>&1
+mpirun -np 24 --bind-to none --oversubscribe foamRun -parallel </dev/null > log.solver 2>&1
+
+# Reconstruct all frames and export lightweight 3D VTK surfaces for every frame
+reconstructPar -fields '(H2 U)' > log.reconstructPar_all 2>&1
+
+cat << 'EOF' > $CASE_DIR/system/exportBuildupFrames
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      exportBuildupFrames;
+}
+type surfaces;
+libs (\"libsampling.so\");
+surfaceFormat vtk;
+interpolationScheme cellPoint;
+fields (H2);
+surfaces
+(
+    centerSlice
+    {
+        type cuttingPlane;
+        planeType pointAndNormal;
+        point (0 0 2.3);
+        normal (1 0 0);
+        interpolate true;
+    }
+    iso_Y015
+    {
+        type isoSurface;
+        isoField H2;
+        isoValue 0.015;
+        interpolate true;
+    }
+    iso_Y040
+    {
+        type isoSurface;
+        isoField H2;
+        isoValue 0.040;
+        interpolate true;
+    }
+);
+EOF
+
+foamPostProcess -func exportBuildupFrames > log.exportBuildupFrames 2>&1
+mkdir -p $HPC_ROOT/results/h2_buildup_vtk
+cp $CASE_DIR/constant/triSurface/wall.stl $HPC_ROOT/results/h2_buildup_vtk/
+cp -r $CASE_DIR/postProcessing/exportBuildupFrames/* $HPC_ROOT/results/h2_buildup_vtk/
+tar -czf $HPC_ROOT/results/h2_buildup_vtk.tar.gz -C $HPC_ROOT/results h2_buildup_vtk
+echo '=== BUILDUP VIDEO FRAMES EXPORTED OK ==='
+"

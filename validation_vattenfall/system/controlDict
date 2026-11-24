@@ -1,0 +1,139 @@
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+
+solver              fluid;
+
+startFrom           latestTime;
+startTime           0;
+stopAt              endTime;
+endTime             18.0;
+deltaT              1e-4;
+
+writeControl        adjustableRunTime;
+writeInterval       1.8;
+purgeWrite          3;
+writeFormat         binary;
+writePrecision      8;
+writeCompression    off;
+timeFormat          general;
+timePrecision       6;
+runTimeModifiable   true;
+
+adjustTimeStep      yes;
+maxCo               3.0;
+maxDeltaT           0.01;
+
+functions
+{
+    yPlusAudit
+    {
+        type            yPlus;
+        libs            ("libfieldFunctionObjects.so");
+        writeControl    writeTime;
+        log             true;
+    }
+
+    mainInletFlux
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+        fields          (phi);
+        operation       sum;
+        select          patch;
+        patch           main_inlet;
+        writeFields     false;
+        log             true;
+        writeControl    timeStep;
+        writeInterval   25;
+    }
+
+    branchInletFlux
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+        fields          (phi);
+        operation       sum;
+        select          patch;
+        patch           branch_inlet;
+        writeFields     false;
+        log             true;
+        writeControl    timeStep;
+        writeInterval   25;
+    }
+
+    outletFlux
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+        fields          (phi);
+        operation       sum;
+        select          patch;
+        patch           outlet;
+        writeFields     false;
+        log             true;
+        writeControl    timeStep;
+        writeInterval   25;
+    }
+
+    outletScalarAvg
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+        fields          (T);
+        operation       areaAverage;
+        select          patch;
+        patch           outlet;
+        writeFields     false;
+        log             true;
+        writeControl    timeStep;
+        writeInterval   25;
+    }
+
+    pInletAvg
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+        fields          (p_rgh);
+        operation       areaAverage;
+        select          patch;
+        patch           main_inlet;
+        writeFields     false;
+        log             true;
+        writeControl    timeStep;
+        writeInterval   25;
+    }
+
+    pOutletAvg
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+        fields          (p_rgh);
+        operation       areaAverage;
+        select          patch;
+        patch           outlet;
+        writeFields     false;
+        log             true;
+        writeControl    timeStep;
+        writeInterval   25;
+    }
+
+    fieldAverage
+    {
+        type            fieldAverage;
+        libs            ("libfieldFunctionObjects.so");
+        writeControl    writeTime;
+        timeStart       7.2;
+        fields
+        (
+
+            U     { mean on; prime2Mean on;  base time; }
+            T     { mean on; prime2Mean on;  base time; }
+            p_rgh { mean on; prime2Mean off; base time; }
+
+        );
+    }
+}

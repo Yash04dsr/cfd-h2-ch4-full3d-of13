@@ -1,0 +1,14 @@
+{
+  "gate": "Gate 2: OpenFOAM v13 Dict Contract",
+  "mode": "vattenfall",
+  "passed": true,
+  "checks": {
+    "no_symmetryPlane_in_U": true,
+    "second_order_U_convection": true,
+    "no_first_order_upwind_U": true,
+    "true_pimple_nOuter_ge_5": true,
+    "final_relaxation_is_1": true,
+    "exact_1_7_power_law_no_sqr": true,
+    "maxCo_le_1": true
+  }
+}

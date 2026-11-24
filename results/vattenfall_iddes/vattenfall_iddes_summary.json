@@ -1,0 +1,43 @@
+{
+  "case": "/scratch/chemical/dual/ch7221493/cfd_full3d_of13_clean/cases/validation_vattenfall_iddes",
+  "turbulence": "SpalartAllmarasIDDES, 1.25M cells",
+  "end_time_s": 15.990455,
+  "avg_start_s": 6.0,
+  "mass_in_kg_s": 14.951786770000004,
+  "mass_out_kg_s": 14.951826432131822,
+  "mass_closure_err_pct": 0.0002652668368599901,
+  "T_out_CFD_K": 298.92264982801237,
+  "T_out_analytical_K": 298.9325579263527,
+  "T_out_err_K": -0.00990809834030415,
+  "deltaP_Pa": 615.053035015448,
+  "U_mix_m_s": 0.974211239811613,
+  "PIV_Uz_RMSE": 0.052056464534814974,
+  "Thermocouple_Tstar_RMSE": 0.05011931152404188,
+  "cfd_Tstar_at_exp_stations": {
+    "z_over_D": [
+      2.0,
+      4.0,
+      6.0,
+      8.0
+    ],
+    "top": [
+      0.5817,
+      0.5454,
+      0.5245,
+      0.485
+    ],
+    "side": [
+      0.0383,
+      0.3271,
+      0.3801,
+      0.3889
+    ],
+    "bottom": [
+      0.0,
+      0.0691,
+      0.1693,
+      0.1929
+    ]
+  },
+  "figure": "/scratch/chemical/dual/ch7221493/cfd_full3d_of13_clean/results/vattenfall_iddes/vattenfall_iddes_validation_4panel.png"
+}
