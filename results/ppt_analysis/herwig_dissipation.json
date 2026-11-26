@@ -1,0 +1,107 @@
+{
+  "h2_ch4_90deg_top_dd035_urans": {
+    "W_turb_W": 1062.8,
+    "V_tot_m3": 1.1842,
+    "n_cells": 1673479
+  },
+  "h2_ch4_90deg_bot_dd035_urans": {
+    "W_turb_W": 1092.1,
+    "V_tot_m3": 1.1842,
+    "n_cells": 1673479
+  },
+  "h2_ch4_30deg_bottom_verified": {
+    "W_turb_W": 1564.7,
+    "V_tot_m3": 1.1568,
+    "n_cells": 1501624
+  },
+  "h2_ch4_60deg_verified": {
+    "W_turb_W": 2174.7,
+    "V_tot_m3": 1.1588,
+    "n_cells": 1528505
+  },
+  "h2_ch4_60deg_bottom_verified": {
+    "W_turb_W": 2261.1,
+    "V_tot_m3": 1.1588,
+    "n_cells": 1528505
+  },
+  "h2_ch4_90deg_base_verified": {
+    "W_turb_W": 1399.0,
+    "V_tot_m3": 1.1591,
+    "n_cells": 1491187
+  },
+  "h2_ch4_90deg_bottom_urans": {
+    "W_turb_W": 1424.3,
+    "V_tot_m3": 1.1591,
+    "n_cells": 1491187
+  },
+  "h2_ch4_120deg_top_verified": {
+    "W_turb_W": 1876.5,
+    "V_tot_m3": 1.1588,
+    "n_cells": 1528793
+  },
+  "h2_ch4_120deg_bottom_verified": {
+    "W_turb_W": 1930.7,
+    "V_tot_m3": 1.1588,
+    "n_cells": 1528793
+  },
+  "h2_ch4_150deg_top_verified": {
+    "W_turb_W": 2057.2,
+    "V_tot_m3": 1.1568,
+    "n_cells": 1501815
+  },
+  "h2_ch4_150deg_bottom_verified": {
+    "W_turb_W": 2096.6,
+    "V_tot_m3": 1.1568,
+    "n_cells": 1501815
+  },
+  "h2_ch4_90deg_top_vr48_urans": {
+    "W_turb_W": 16471.4,
+    "V_tot_m3": 1.1591,
+    "n_cells": 1491187
+  },
+  "h2_ch4_90deg_bot_vr16_urans": {
+    "W_turb_W": 603.8,
+    "V_tot_m3": 1.1591,
+    "n_cells": 1491187
+  },
+  "h2_ch4_90deg_bot_vr24_urans": {
+    "W_turb_W": 960.8,
+    "V_tot_m3": 1.1591,
+    "n_cells": 1491187
+  },
+  "h2_ch4_90deg_gci_coarse_verified": {
+    "W_turb_W": 1207.8,
+    "V_tot_m3": 1.1583,
+    "n_cells": 682521
+  },
+  "h2_ch4_90deg_sct09_verified": {
+    "W_turb_W": 1414.8,
+    "V_tot_m3": 1.1591,
+    "n_cells": 1491187
+  },
+  "h2_ch4_90deg_bot_vr48_urans": {
+    "W_turb_W": 17669.0,
+    "V_tot_m3": 1.1591,
+    "n_cells": 1491187
+  },
+  "h2_ch4_30deg_top_verified": {
+    "W_turb_W": 1527.4,
+    "V_tot_m3": 1.1568,
+    "n_cells": 1501624
+  },
+  "h2_ch4_90deg_bot_dd018_urans": {
+    "W_turb_W": 17876.2,
+    "V_tot_m3": 1.1523,
+    "n_cells": 1509695
+  },
+  "h2_ch4_90deg_bot_dd030_urans": {
+    "W_turb_W": 1267.9,
+    "V_tot_m3": 1.1696,
+    "n_cells": 1599569
+  },
+  "h2_ch4_90deg_top_vr16_urans": {
+    "W_turb_W": 585.7,
+    "V_tot_m3": 1.1591,
+    "n_cells": 1491187
+  }
+}
